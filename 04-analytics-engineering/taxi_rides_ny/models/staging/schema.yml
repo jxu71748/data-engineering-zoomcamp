@@ -8,6 +8,7 @@ sources:
     tables:
       - name: green_tripdata
       - name: yellow_tripdata
+      - name: fhv_tripdata
          # freshness:
            # error_after: {count: 6, period: hour}
 
@@ -194,3 +195,26 @@ models:
             description: Total amount of all tolls paid in trip.
           - name: Total_amount 
             description: The total amount charged to passengers. Does not include cash tips.
+
+
+
+    - name: stg_fhv_tripdata
+      description: "Staging model for FHV trip data, filtering out records where dispatching_base_num is NULL."
+      columns:
+        - name: dispatching_base_num
+          description: "Base number for dispatching FHV trips."
+          tests:
+            - not_null:
+                severity: warn
+        - name: pickup_datetime
+          description: "Timestamp when the trip started."
+          tests:
+            - not_null
+        - name: dropoff_datetime
+          description: "Timestamp when the trip ended."
+          tests:
+            - not_null
+        - name: pickup_location_id
+          description: "Location ID where the trip started."
+        - name: dropoff_location_id
+          description: "Location ID where the trip ended."
