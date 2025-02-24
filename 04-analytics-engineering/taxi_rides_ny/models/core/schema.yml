@@ -127,3 +127,121 @@ models:
       - name: payment_type_description
         data_type: string
         description: ""
+
+  - name: fct_taxi_trips_quarterly_revenue
+    description: >
+      Aggregated quarterly revenue for both Green and Yellow taxi services.
+      This table calculates total revenue per service type, year, and quarter,
+      and includes year-over-year revenue growth metrics.
+    columns:
+      - name: service_type
+        data_type: string
+        description: "Service type (Green or Yellow)."
+
+      - name: year_quarter
+        data_type: string
+        description: "Year and quarter in the format YYYY/QX (e.g., 2020/Q1)."
+
+      - name: total_revenue
+        data_type: int64
+        description: "Total revenue for the given service type in that quarter."
+
+      - name: yoy_growth
+        data_type: int64
+        description: "Year-over-Year growth percentage compared to the same quarter of the previous year."
+
+
+
+  - name: fct_taxi_trips_monthly_fare_p95
+    description: >
+      Aggregated monthly fare amount percentiles (P97, P95, P90) 
+      for green and yellow taxis, computed by year and month.
+    columns:
+      - name: service_type
+        data_type: string
+        description: "Taxi service type (Green or Yellow)"
+      
+      - name: year
+        description: "Year of the trip"
+        data_type: string
+      
+      - name: month
+        description: "Month of the trip"
+        data_type: string
+      
+      - name: p97
+        description: "97th percentile of fare_amount for the given service type, year, and month"
+        data_type: int64
+      
+      - name: p95
+        description: "95th percentile of fare_amount for the given service type, year, and month"
+        data_type: int64
+      
+      - name: p90
+        description: "90th percentile of fare_amount for the given service type, year, and month"
+        data_type: int64
+
+
+
+  - name: dim_fhv_trips
+    description: >
+      Dimensional table for FHV trips, enriched with pickup and dropoff zone information.
+      Includes year and month to facilitate time-based analysis.
+    columns:
+      - name: year
+        description: "The year when the trip started."
+        data_type: INT64
+      - name: month
+        description: "The month when the trip started."
+        data_type: INT64
+      - name: pickup_location_id
+        description: "Location ID where the trip started."
+        data_type: INT64
+      - name: dropoff_location_id
+        description: "Location ID where the trip ended."
+        data_type: INT64
+      - name: pickup_borough
+        description: "Borough where the trip started."
+        data_type: STRING
+      - name: pickup_zone
+        description: "Zone where the trip started."
+        data_type: STRING
+      - name: dropoff_borough
+        description: "Borough where the trip ended."
+        data_type: STRING
+      - name: dropoff_zone
+        description: "Zone where the trip ended."
+        data_type: STRING
+      - name: pickup_datetime
+        description: "Timestamp when the trip started."
+        data_type: TIMESTAMP
+      - name: dropoff_datetime
+        description: "Timestamp when the trip ended."
+        data_type: TIMESTAMP
+
+  - name: fct_fhv_monthly_zone_traveltime_p90
+    description: >
+      Fact table containing the 90th percentile of trip durations for FHV trips per pickup and dropoff location.
+    columns:
+      - name: year
+        description: "The year when the trip started."
+        data_type: INT64
+      - name: month
+        description: "The month when the trip started."
+        data_type: INT64
+      - name: pickup_location_id
+        description: "Location ID where the trip started."
+        data_type: INT64
+      - name: dropoff_location_id
+        description: "Location ID where the trip ended."
+        data_type: INT64
+      - name: pickup_zone
+        description: "Zone where the trip started."
+        data_type: STRING
+      - name: dropoff_zone
+        description: "Zone where the trip ended."
+        data_type: STRING
+      - name: p90_trip_duration
+        description: "The 90th percentile trip duration in seconds."
+        data_type: FLOAT64
+
